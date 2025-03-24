@@ -1,0 +1,24 @@
+# XStation5 Api explorations
+
+## Section
+
+```elixir
+xtb_url = "https://ipax.xtb.com"
+auth_token = "YOUR.TOKEN.HERE"
+```
+
+## PersonService
+
+```elixir
+alias Pl.Xtb.Ipax.Pub.Grpc.Person.V1
+alias Pl.Xtb.Ipax.Pub.Grpc.Person.V1.PersonService.Stub, as: PersonService
+
+ssl_options = :tls_certificate_check.options(xtb_url)
+cred = GRPC.Credential.new(ssl: ssl_options)
+
+auth_headers = [{"authorization", "Bearer #{auth_token}"}]
+{:ok, channel} = GRPC.Stub.connect(xtb_url, cred: cred, headers: auth_headers)
+
+request = %V1.GetPersonRequest{}
+{:ok, reply} = PersonService.get_person(channel, request)
+```

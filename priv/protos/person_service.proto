@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package pl.xtb.ipax.pub.grpc.person.v1;
+
+service PersonService {
+  rpc GetPerson(GetPersonRequest) returns (GetPersonResponse);
+  // Possibly other methods...
+}
+
+message GetPersonRequest {
+  // Empty or with authentication info
+}
+
+message GetPersonResponse {
+  PersonInfo person_info = 1;
+  repeated AccountInfo accounts = 2;
+}
+
+message PersonInfo {
+  string user_id = 1;
+  string email = 2;
+  string country_code = 3;
+  // Possibly other fields...
+}
+
+message AccountInfo {
+  int64 account_id = 1;  // Or timestamp
+  string account_name = 2;
+  string currency = 3;
+  // Possibly other fields...
+}
